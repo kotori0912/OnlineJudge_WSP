@@ -1,0 +1,40 @@
+html
+  head
+    meta[charset="UTF-8"]
+    title
+      | 簡易オンラインジャッジ
+  body
+    h1
+      | コードをDockerコンテナで実行!
+    select#language
+      option[value="ruby"]
+        | Ruby
+      option[value="python"]
+        | Python
+      option[value="c"]
+        | C
+    br
+    | ソースコード
+    br
+    #source_code[style="width= 100%; height: 200px; border: 1px solid;"]
+    | 標準入力:
+    br
+    textarea#input[name="" cols="30" rows="10" style="width: 100%; height: 50px; resize: vertical;"]
+    botton#run_button.btn.btn-primary
+      | 実行(Ctrl+Enter)
+    br
+    hr
+    | 標準出力:
+    pre
+
+    #stdout[style="background: lightgray"]
+    | 実行時間:
+    #time[style="background: lightgray"]
+    | 終了コード:
+    #exit_code[style="background: ligthgray"]
+    script[src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"]
+    script[src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"]
+    script[src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js"]
+    script[src="run.js"]
+    script[src="ui.js"]
+
