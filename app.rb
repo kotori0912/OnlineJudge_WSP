@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
+
 require_relative 'lib/excontainer'
 
 get '/' do
@@ -7,20 +8,26 @@ get '/' do
 end
 
 get '/exec' do
-  r = ExCountainer.new(Time.now.to_f, 'c')
+  r = ExContainer.new(Time.now.to_f, 'c')
   r.exec.to_s
 end
 
 post '/api/run' do
   lang = params[:language]
-  sorce = params[:sorce_code]
+  source = params[:source_code]
   input = params[:input]
   time = Time.now.to_f
   pfname = "#{time}.#{lang.downcase}"
   ifname = "#{time}.in"
 
-  File.open("tmp/#{pfname}", "w") do |fl|
-    prog.split('\n').each do |i|
+  File.open("tmp/#{pfname}", 'w') do |f|
+    source.split('\n').each do |l|
+      f.puts(l)
+    end
+  end
+
+  File.open("tmp/#{ifname}", 'w') do |f|
+    input.split('\n').each do |l|
       f.puts(l)
     end
   end
@@ -29,7 +36,7 @@ post '/api/run' do
 
   r = c.exec()
 
-  return_prm = {stdout: r[0].join(''), stderr: r[1].join(''), exit_code: r[2]}
+  return_params = {stdout: r[0].join(''), stderr: r[1].join(''), exit_code: r[2]}
   content_type :json
-  retuen_prm.to_json
+  return_params.to_json
 end
